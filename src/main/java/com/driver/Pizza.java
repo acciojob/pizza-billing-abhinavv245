@@ -5,55 +5,74 @@ public class Pizza {
     private int price;
     private Boolean isVeg;
     private String bill;
-   StringBuilder str= new StringBuilder();
+    private int extraTopping;
+    private boolean isCheeseAdded;
+    private boolean isToppingsAdded;
+    private boolean isTakeAwayAdded;
+    private boolean isBillgenerated;
     public Pizza(Boolean isVeg){
         this.isVeg = isVeg;
+        this.isCheeseAdded=false;
+        this.isToppingsAdded=false;
+        this.isTakeAwayAdded=false;
+        this.isBillgenerated=false;
+        this.bill="";
+
       if(isVeg){
           this.price=300;
-          str.append("Base Price Of The Pizza: 300\n");
+         this.bill+=("Base Price Of The Pizza: 300\n");
+         this.extraTopping=70;
+
 
       }else{
           this.price=400;
-          str.append("Base Price Of The Pizza: 400\n");
+          this.bill+=("Base Price Of The Pizza: 400\n");
+          this.extraTopping=120;
       }
     }
 
     public int getPrice(){
         return this.price;
     }
-private boolean Cadded=false;
+
     public void addExtraCheese() {
 
-        if (!Cadded) {
+        if (!isCheeseAdded) {
             this.price = this.price + 80;
-            str.append("Extra Cheese Added: 80\n");
-            Cadded=true;
+            this.isCheeseAdded=true;
         }
     }
-   private boolean Tadded=false;
+
     public void addExtraToppings() {
 
-        if(!Tadded) {
-            if (isVeg) {
-                this.price = this.price + 70;
-                str.append("Extra Toppings Added: 70\n");
-                Tadded=true;
-            } else {
-                this.price = this.price + 120;
-                str.append("Extra Toppings Added: 120\n");
-                Tadded=true;
-            }
+       if(!isToppingsAdded){
+           this.price+=this.extraTopping;
+           this.isToppingsAdded=true;
         }
     }
 
     public void addTakeaway(){
-        this.price =this.price +20;
-        str.append("Paperbag Added: 20\n");
+       if(!isTakeAwayAdded){
+           this.price+=20;
+           this.isTakeAwayAdded=true;
+       }
     }
 
-    public String getBill(){
-        str.append("Total Price: "+String.valueOf(getPrice()+"\n"));
-  this.bill= String.valueOf(str);
-        return this.bill ;
+    public String getBill() {
+        if (!isBillgenerated) {
+            if (isCheeseAdded) {
+                this.bill += "Extra Cheese Added: 80\n";
+            }
+            if (isToppingsAdded) {
+                this.bill += "Extra Toppings Added: " + this.extraTopping + "\n";
+            }
+            if (isTakeAwayAdded) {
+                this.bill += "Paperbag Added: 20\n";
+
+            }
+            this.bill+="Total Price: "+this.price+"\n";
+           this.isBillgenerated=true;
+        }
+        return this.bill;
     }
 }
